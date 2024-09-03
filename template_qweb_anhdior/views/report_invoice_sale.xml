@@ -224,15 +224,16 @@
 
 <!--                                    thanh toán-->
                                     <t t-foreach="o.x_payment_invoice_ids" t-as="payment">
-                                        <tr>
-                                        <td >
-                                            <strong>Đã thanh toán: <span t-esc="payment.payment_id.journal_id.name"/> </strong>
-                                        </td>
-                                        <td class="text-right">
-                                            <span
-                                                    t-esc="payment.amount"
-                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                        </td>
+
+                                        <tr t-if="payment.payment_id.state == 'posted'">
+                                            <td >
+                                                <strong>Đã thanh toán: <span t-esc="payment.payment_id.journal_id.name"/> </strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span
+                                                        t-esc="payment.amount"
+                                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
                                         </tr>
 
                                     </t>

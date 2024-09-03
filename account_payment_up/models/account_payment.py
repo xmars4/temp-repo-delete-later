@@ -196,74 +196,20 @@ class AccountPayment(models.Model):
         """Hàm này update lại giá trị bên bút toán,
         Nhưng trường hợp thanh toán cho nhiều Hóa đơn sẽ có nhiều account.move.line nên bị lỗi Singleton"""
 
-        if self._context.get('skip_account_move_synchronization'):
-            return
-
-        if not any(field_name in changed_fields for field_name in ( 'x_payment_line_ids',
-                'date', 'amount', 'payment_type', 'partner_type', 'payment_reference', 'is_internal_transfer',
-                'currency_id', 'partner_id', 'destination_account_id', 'partner_bank_id',
-        )):
-            return
-
-        for pay in self.with_context(skip_account_move_synchronization=True):
-            liquidity_lines, counterpart_lines, writeoff_lines = pay._seek_for_lines()
-
-            # Make sure to preserve the write-off amount.
-            # This allows to create a new payment with custom 'line_ids'.
-
-            if writeoff_lines:
-                counterpart_amount = sum(counterpart_lines.mapped('amount_currency'))
-                writeoff_amount = sum(writeoff_lines.mapped('amount_currency'))
-
-                # To be consistent with the payment_difference made in account.payment.register,
-                # 'writeoff_amount' needs to be signed regarding the 'amount' field before the write.
-                # Since the write is already done at this point, we need to base the computation on accounting values.
-                if (counterpart_amount > 0.0) == (writeoff_amount > 0.0):
-                    sign = -1
-                else:
-                    sign = 1
-                writeoff_amount = abs(writeoff_amount) * sign
-
-                write_off_line_vals = {
-                    'name': writeoff_lines[0].name,
-                    'amount': writeoff_amount,
-                    'account_id': writeoff_lines[0].account_id.id,
-                }
-            else:
-                write_off_line_vals = {}
-
-            line_vals_list = pay._prepare_move_line_default_vals(write_off_line_vals=write_off_line_vals)
-
-            line_ids_commands = [
-                (1, liquidity_lines.id, line_vals_list[0]),
-                (1, counterpart_lines.id, line_vals_list[1]),
-            ]
-
-            for line in writeoff_lines:
-                line_ids_commands.append((2, line.id))
-
-            for extra_line_vals in line_vals_list[2:]:
-                line_ids_commands.append((0, 0, extra_line_vals))
-
-            # Update the existing journal items.
-            # If dealing with multiple write-off lines, they are dropped and a new one is generated.
-
-            pay.move_id.write({
-                'partner_id': pay.partner_id.id,
-                'currency_id': pay.currency_id.id,
-                'partner_bank_id': pay.partner_bank_id.id,
-                'line_ids': line_ids_commands,
-            })
+        if (not self.x_payment_invoice_ids and not self.x_payment_line_ids):
+            return super(AccountPayment, self)._synchronize_to_moves(changed_fields)
+        else:
+            pass
 
     # OVERRIDE
-    # def _synchronize_from_moves(self, changed_fields):
-    #     """Hàm này update lại giá trị bên bút toán,
-    #     Nhưng trường hợp thanh toán cho nhiều Hóa đơn sẽ có nhiều account.move.line nên bị lỗi Singleton"""
-    #
-    #     if (not self.x_payment_invoice_ids and not self.x_payment_line_ids):
-    #         return super(AccountPayment, self)._synchronize_from_moves(changed_fields)
-    #     else:
-    #         pass
+    def _synchronize_from_moves(self, changed_fields):
+        """Hàm này update lại giá trị bên bút toán,
+        Nhưng trường hợp thanh toán cho nhiều Hóa đơn sẽ có nhiều account.move.line nên bị lỗi Singleton"""
+
+        if (not self.x_payment_invoice_ids and not self.x_payment_line_ids):
+            return super(AccountPayment, self)._synchronize_from_moves(changed_fields)
+        else:
+            pass
 
     def button_compute_taxes(self):
         lines = []
@@ -529,124 +475,6 @@ class AccountPayment(models.Model):
     def action_post(self):
         return super(AccountPayment, self).action_post()
 
-
-    def _prepare_move_line_default_vals(self, write_off_line_vals=None):
-        ''' Prepare the dictionary to create the default account.move.lines for the current payment.
-        :param write_off_line_vals: Optional dictionary to create a write-off account.move.line easily containing:
-            * amount:       The amount to be added to the counterpart amount.
-            * name:         The label to set on the line.
-            * account_id:   The account on which create the write-off.
-        :return: A list of python dictionary to be passed to the account.move.line's 'create' method.
-        '''
-        self.ensure_one()
-        write_off_line_vals = write_off_line_vals or {}
-
-        if not self.outstanding_account_id:
-            raise UserError(_(
-                "You can't create a new payment without an outstanding payments/receipts account set either on the company or the %s payment method in the %s journal.",
-                self.payment_method_line_id.name, self.journal_id.display_name))
-
-        # Compute amounts.
-        write_off_amount_currency = write_off_line_vals.get('amount', 0.0)
-
-        if self.payment_type == 'inbound':
-            # Receive money.
-            liquidity_amount_currency = self.amount
-        elif self.payment_type == 'outbound':
-            # Send money.
-            liquidity_amount_currency = -self.amount
-            write_off_amount_currency *= -1
-        else:
-            liquidity_amount_currency = write_off_amount_currency = 0.0
-
-        write_off_balance = self.currency_id._convert(
-            write_off_amount_currency,
-            self.company_id.currency_id,
-            self.company_id,
-            self.date,
-        )
-        liquidity_balance = self.currency_id._convert(
-            liquidity_amount_currency,
-            self.company_id.currency_id,
-            self.company_id,
-            self.date,
-        )
-        counterpart_amount_currency = -liquidity_amount_currency - write_off_amount_currency
-        counterpart_balance = -liquidity_balance - write_off_balance
-        currency_id = self.currency_id.id
-
-        if self.is_internal_transfer:
-            if self.payment_type == 'inbound':
-                liquidity_line_name = _('Transfer to %s', self.journal_id.name)
-            else: # payment.payment_type == 'outbound':
-                liquidity_line_name = _('Transfer from %s', self.journal_id.name)
-        else:
-            liquidity_line_name = self.payment_reference
-
-        # Compute a default label to set on the journal items.
-
-        payment_display_name = self._prepare_payment_display_name()
-
-        default_line_name = self.env['account.move.line']._get_default_line_name(
-            _("Internal Transfer") if self.is_internal_transfer else payment_display_name['%s-%s' % (self.payment_type, self.partner_type)],
-            self.amount,
-            self.currency_id,
-            self.date,
-            partner=self.partner_id,
-        )
-        line_vals_list = [
-            # Liquidity line.
-            {
-                'name': liquidity_line_name or default_line_name,
-                'date_maturity': self.date,
-                'amount_currency': liquidity_amount_currency,
-                'currency_id': currency_id,
-                'debit': liquidity_balance if liquidity_balance > 0.0 else 0.0,
-                'credit': -liquidity_balance if liquidity_balance < 0.0 else 0.0,
-                'partner_id': self.partner_id.id,
-                'account_id': self.outstanding_account_id.id,
-            },
-        ]
-        if not self.x_payment_line_ids:
-            line_vals_list.append({
-                'name': self.payment_reference or default_line_name,
-                'date_maturity': self.date,
-                'amount_currency': counterpart_amount_currency,
-                'currency_id': currency_id,
-                'debit': counterpart_balance if counterpart_balance > 0.0 else 0.0,
-                'credit': -counterpart_balance if counterpart_balance < 0.0 else 0.0,
-                'partner_id': self.partner_id.id,
-                'account_id': self.destination_account_id.id,
-            })
-        else:
-            for l in self.x_payment_line_ids:
-                if self.payment_type == 'inbound':
-                    l_amount = l.value * -1
-                elif self.payment_type == 'outbound':
-                    l_amount = l.value
-
-                line_vals_list.append({
-                    'name': l.name or default_line_name,
-                    'date_maturity': self.date,
-                    'amount_currency': l.value,
-                    'currency_id': currency_id,
-                    'debit': l_amount if l_amount > 0.0 else 0.0,
-                    'credit': -l_amount if l_amount < 0.0 else 0.0,
-                    'partner_id': self.partner_id.id,
-                    'account_id': l.account_id.id,
-                })
-        if not self.currency_id.is_zero(write_off_amount_currency):
-            # Write-off line.
-            line_vals_list.append({
-                'name': write_off_line_vals.get('name') or default_line_name,
-                'amount_currency': write_off_amount_currency,
-                'currency_id': currency_id,
-                'debit': write_off_balance if write_off_balance > 0.0 else 0.0,
-                'credit': -write_off_balance if write_off_balance < 0.0 else 0.0,
-                'partner_id': self.partner_id.id,
-                'account_id': write_off_line_vals.get('account_id'),
-            })
-        return line_vals_list
 class AccountPaymentLine(models.Model):
     _name = 'account.payment.line'
 

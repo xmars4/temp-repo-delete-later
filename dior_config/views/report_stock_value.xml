@@ -36,6 +36,7 @@
                         <group>
                             <field name="from_date"/>
                             <field name="to_date"/>
+                            <field name="stock_location"/>
                         </group>
                     </sheet>
                     <footer>

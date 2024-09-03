@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
                     <field name="brand_id"/>
-                                        <field name="x_product_id"/>
+                    <!--                    <field name="x_product_id"/>-->
                     <!--                    <button name="button_convert" type="object" string="Chuyển đổi"/>-->
                 </xpath>
                 <xpath expr="//field[@name='uom_po_id']" position="after">

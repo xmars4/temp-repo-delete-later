@@ -17,7 +17,6 @@ class StockMoveLine(models.Model):
     qty_done = fields.Float(digits='Product Unit of Measure extra')
 
     x_invoice_id = fields.Many2one('account.move', 'Số chứng từ', related='move_id.x_invoice_line_id.move_id')
-    x_date_invoice = fields.Date('Ngày hoá đơn', related='x_invoice_id.invoice_date', store=True)
     x_type = fields.Selection([
         ('in', 'Nhập hàng'),
         ('out', 'Bán hàng'),
