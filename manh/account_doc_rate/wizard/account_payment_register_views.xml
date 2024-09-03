@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_reg_payment_form_rate_inherit" model="ir.ui.view">
+            <field name="name">account.payment.register.form.rate.inherit</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position="after">
+
+                    <field name="x_compare_currency" invisible="1"/>
+                    <field name="x_rate_active"
+                           attrs="{'invisible': [('x_compare_currency', '=', True)]}"
+                           string="Payment register manual currency rate"/>
+                    <field name="x_rate" string="Payment register currency rate"
+                           attrs="{'invisible': [('x_rate_active', '=', False)],
+                                   'required': [('x_rate_active', '=', True)]}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

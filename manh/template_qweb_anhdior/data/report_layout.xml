@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="report_layout_anhdior" model="report.layout">
+            <field name="name">AnhDior</field>
+            <field name="sequence">-1</field>
+            <field name="view_id" ref="template_qweb_anhdior.external_layout_anhdior"/>
+            <field name="image"></field>
+            <field name="pdf"></field>
+        </record>
+
+        <record id="account_invoices_anhdior" model="ir.actions.report">
+            <field name="name">Hoá đơn phẫu thuật</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">template_qweb_anhdior.report_invoice_with_payments_anhdior</field>
+            <field name="report_file">template_qweb_anhdior.report_invoice_with_payments_anhdior</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+         <record id="account_invoices_sale_anhdior" model="ir.actions.report">
+            <field name="name">Hoá đơn bán hàng</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">template_qweb_anhdior.report_invoice_anhdior</field>
+            <field name="report_file">template_qweb_anhdior.report_invoice_anhdior</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+<!--            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>-->
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>

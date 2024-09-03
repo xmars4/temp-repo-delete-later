@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_account_payment_cash_in" model="ir.actions.act_window">
+            <field name="name">Payment Cash In</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="context">{
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'default_x_payment_bank': False,
+                'default_move_journal_types': ('cash',),
+                'default_is_internal_transfer': False,
+                }
+            </field>
+            <field name="domain">
+                [('payment_type', '=', 'inbound'), ('partner_type', '=', 'customer'),
+                ('x_payment_bank', '=', False), ('is_internal_transfer', '=', False)]
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Register a payment
+                </p>
+                <p>
+                    Payments are used to register liquidity movements. You can process those payments by your own means
+                    or by using installed facilities.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,328 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_payment_up
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20220814\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-19 07:53+0000\n"
+"PO-Revision-Date: 2022-08-19 07:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__account_id
+msgid "Account"
+msgstr "Tài khoản"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_cashier
+msgid "Cashier"
+msgstr "Thu ngân"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__product_id
+msgid "Category"
+msgstr "Danh mục"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__create_uid
+msgid "Creator"
+msgstr "Người tạo"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__name
+msgid "Description"
+msgstr "Mô tả"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Detail"
+msgstr "Chi tiết"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_director
+msgid "Director"
+msgstr "Trưởng phòng"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_operation_type__production
+msgid "HĐ SXKD"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_operation_type__finance
+msgid "HĐ Tài chính"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_operation_type__invest
+msgid "HĐ Đầu tư"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__id
+msgid "ID"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__invoice_no
+msgid "Invoice No"
+msgstr "Số hóa đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__invoice_ref
+msgid "Invoice Ref"
+msgstr "Ký hiệu hoá đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__move_date
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__invoice_date
+msgid "Invoice date"
+msgstr "Ngày hoá đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_liquid
+msgid "Is liquidation of assets"
+msgstr "Nghiệp vụ thanh lý TSCĐ, BĐSĐT"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_payment_bank
+msgid "Is payment bank"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__is_auto_gen
+msgid "Is record created auto"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_link_invoice
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__link_invoice
+msgid "Link Invoice Number"
+msgstr "Số link hóa đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_payment_type__nor
+msgid "Normal payment"
+msgstr "Thanh toán thường"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_operation_type
+msgid "Operation type"
+msgstr "Loại hoạt động"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__partner_id
+msgid "Partner"
+msgstr "Đối tác"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__payment_id
+msgid "Payment"
+msgstr "Thanh toán"
+
+#. module: account_payment_up
+#: model:ir.ui.menu,name:account_payment_up.menu_payment_bank
+msgid "Payment Bank"
+msgstr "Ngân hàng"
+
+#. module: account_payment_up
+#: model:ir.actions.act_window,name:account_payment_up.action_account_payment_bank_in
+#: model:ir.ui.menu,name:account_payment_up.menu_action_payment_bank_in
+msgid "Payment Bank In"
+msgstr "Giấy báo có"
+
+#. module: account_payment_up
+#: model:ir.actions.act_window,name:account_payment_up.action_account_payment_bank_out
+#: model:ir.ui.menu,name:account_payment_up.menu_action_payment_bank_out
+msgid "Payment Bank Out"
+msgstr "Giấy báo nợ"
+
+#. module: account_payment_up
+#: model:ir.ui.menu,name:account_payment_up.menu_payment_cash
+msgid "Payment Cash"
+msgstr "Tiền mặt"
+
+#. module: account_payment_up
+#: model:ir.actions.act_window,name:account_payment_up.action_account_payment_cash_in
+#: model:ir.ui.menu,name:account_payment_up.menu_action_payment_cash_in
+msgid "Payment Cash In"
+msgstr "Phiếu thu tiền mặt"
+
+#. module: account_payment_up
+#: model:ir.actions.act_window,name:account_payment_up.action_account_payment_cash_out
+#: model:ir.ui.menu,name:account_payment_up.menu_action_payment_cash_out
+msgid "Payment Cash Out"
+msgstr "Phiếu chi tiền mặt"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__payment_line_ids
+msgid "Payment Lines"
+msgstr "Chi tiết"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_payment_type
+msgid "Payment Type"
+msgstr "Loại thanh toán"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Payment card line"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model,name:account_payment_up.model_account_payment
+#: model:ir.ui.menu,name:account_payment_up.menu_payments_cash_bank
+msgid "Payments"
+msgstr "Thanh toán"
+
+#. module: account_payment_up
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_bank_in
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_bank_out
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_cash_in
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_cash_out
+msgid ""
+"Payments are used to register liquidity movements. You can process those payments by your own means\n"
+"                    or by using installed facilities."
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_receiver
+msgid "Receiver"
+msgstr "Người nhận"
+
+#. module: account_payment_up
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_bank_in
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_bank_out
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_cash_in
+#: model_terms:ir.actions.act_window,help:account_payment_up.action_account_payment_cash_out
+msgid "Register a payment"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__tax_addr
+msgid "Tax Address"
+msgstr "Địa chỉ thuế"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__tax_code
+msgid "Tax Code"
+msgstr "Mã số thuế thuế"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__tax_obj
+msgid "Tax Object"
+msgstr "Đối tượng thuế"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__tax_ids
+msgid "Taxs"
+msgstr "Thuế"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Tạo các mục thuế"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_line__value
+msgid "Value"
+msgstr "Giá trị"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Xoá các dòng thuế (nếu có) và tạo lại?"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model,name:account_payment_up.model_account_payment_line
+msgid "account.payment.line"
+msgstr ""
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__move_currency_id
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__amount_residual
+msgid "Due"
+msgstr "Đến hạn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__move_id
+msgid "Invoice ID"
+msgstr "ID Hóa đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__move_ref
+msgid "Invoice description"
+msgstr "Mô tả"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__amount
+msgid "Payment amount"
+msgstr "Số tiền thanh toán"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__note
+msgid "Remark"
+msgstr "Chú ý"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__selected
+msgid "Selected"
+msgstr "Đã lựa chọn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment_invoice__move_total
+msgid "Total"
+msgstr "Tổng"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Invoices"
+msgstr "Hóa đơn"
+
+#. module: account_payment_up
+#: model_terms:ir.ui.view,arch_db:account_payment_up.view_account_payment_form_inherit
+msgid "Note"
+msgstr "Ghi chú"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_note
+msgid "Notes"
+msgstr "Ghi chú"
+
+#. module: account_payment_up
+#: model:ir.actions.act_window,name:account_payment_up.action_account_internal_payment
+#: model:ir.ui.menu,name:account_payment_up.menu_action_internal_payment
+#: model:ir.ui.menu,name:account_payment_up.menu_internal_payment
+msgid "Internal Payment"
+msgstr "Giao dịch nội bộ"
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_payment_type__inv_manual
+msgid "Manual pay for specific invoices"
+msgstr "Thanh toán thủ công theo hóa đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields.selection,name:account_payment_up.selection__account_payment__x_payment_type__inv_auto
+msgid "Auto pay for specific invoices"
+msgstr "Thanh toán tự động theo hóa đơn"
+
+#. module: account_payment_up
+#: model:ir.model.fields,field_description:account_payment_up.field_account_payment__x_payment_remain_id
+msgid "Account payment amount remain"
+msgstr "Thanh toán của số tiền dư"

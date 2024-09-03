@@ -1,0 +1,80 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_doc_rate
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20220814\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-15 07:53+0000\n"
+"PO-Revision-Date: 2022-08-15 07:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_purchase_order__purchase_manual_currency_rate
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.purchase_order_form_rate_inherit
+msgid "Purchase currency rate"
+msgstr "Tỷ giá"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_purchase_order__purchase_manual_currency_rate_active
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.purchase_order_form_rate_inherit
+msgid "Purchase manual currency rate"
+msgstr "Áp dụng tỷ giá thủ công"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_bank_statement_line__manual_currency_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_move__manual_currency_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment__manual_currency_rate
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.account_invoice_form_rate_inherit
+msgid "Currency rate"
+msgstr "Tỷ giá"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_bank_statement_line__manual_currency_rate_active
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_move__manual_currency_rate_active
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment__manual_currency_rate_active
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.account_invoice_form_rate_inherit
+msgid "Manual currency rate"
+msgstr "Áp dụng tỷ giá thủ công"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_sale_order__sale_manual_currency_rate
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.sale_order_form_rate_inherit
+msgid "Sale currency rate"
+msgstr "Tỷ giá"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_sale_order__sale_manual_currency_rate_active
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.sale_order_form_rate_inherit
+msgid "Sale manual currency rate"
+msgstr "Áp dụng tỷ giá thủ công"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment__manual_currency_rate
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.view_account_payment_form_rate_inherit
+msgid "Payment currency rate"
+msgstr "Tỷ giá"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment__manual_currency_rate_active
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.view_account_payment_form_rate_inherit
+msgid "Payment manual currency rate"
+msgstr "Áp dụng tỷ giá thủ công"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment_register__manual_currency_rate
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.view_account_reg_payment_form_rate_inherit
+msgid "Payment register currency rate"
+msgstr "Tỷ giá"
+
+#. module: account_doc_rate
+#: model:ir.model.fields,field_description:account_doc_rate.field_account_payment_register__manual_currency_rate_active
+#: model_terms:ir.ui.view,arch_db:account_doc_rate.view_account_reg_payment_form_rate_inherit
+msgid "Payment register manual currency rate"
+msgstr "Áp dụng tỷ giá thủ công"

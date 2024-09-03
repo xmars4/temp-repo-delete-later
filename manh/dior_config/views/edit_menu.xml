@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_followup.customer_statements_menu" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.product_product_menu_sellable" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.product_product_menu_purchasable" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_auto_transfer.menu_auto_transfer" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_revenue_recognition" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_expense_recognition" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_accountant.menu_action_manual_reconciliation" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.menu_action_tax_adjustment" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_reports.menu_action_account_report_multicurrency_revaluation" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_report_assets" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_reports.menu_action_account_report_gt" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <menuitem name="Sản phẩm"
+                  id="acc_product_id"
+                  parent="account_accountant.menu_accounting"
+                  sequence="3"/>
+        <menuitem name="Sản phẩm"
+                  id="acc_product_template_id"
+                  parent="acc_product_id"
+                  action="stock.product_template_action_product"
+                  sequence="0"/>
+        <menuitem name="Định mức vật liệu"
+                  id="acc_product_bom_id"
+                  parent="acc_product_id"
+                  action="mrp.mrp_bom_form_action"
+                  sequence="1"/>
+        <menuitem name="Tách đơn vị tính"
+                  id="acc_product_unbuild_id"
+                  parent="acc_product_id"
+                  action="mrp.mrp_unbuild"
+                  sequence="2"/>
+        <menuitem name="Xuất hủy"
+                  id="acc_product_scrap_id"
+                  parent="acc_product_id"
+                  action="stock.action_stock_scrap"
+                  sequence="3"/>
+        <menuitem name="Kiểm kê kho"
+                  id="acc_product_count_id"
+                  parent="acc_product_id"
+                  action="stock.action_view_inventory_tree"
+                  sequence="4"/>
+
+        <menuitem name="Đơn vị tính"
+                  id="acc_config_uom_id"
+                  parent="account.account_management_menu"
+                  action="uom.product_uom_categ_form_action"
+                  sequence="10"/>
+
+        <!--Cấu hình kế toán-->
+        <record id="account.account_invoicing_menu" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.account_banks_menu" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.root_payment_menu" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.menu_action_account_fiscal_position_form" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_reports.menu_view_tax_units" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_accountant.account_tag_menu" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_accountant.menu_account_group" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_asset_model_form" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_revenue_model_recognition" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_asset.menu_action_account_expense_model_recognition" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account.menu_configure_tax_report" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="account_reports.menu_account_financial_reports_tree" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+<!--        Ẩn module thừa-->
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="sale.sale_menu_root" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="mrp.menu_mrp_root" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+        <record id="stock.menu_stock_root" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+<!--        Thêm báo cáo kho-->
+        <menuitem name="Báo cáo kho"
+                  id="acc_report_stock_id"
+                  parent="account.menu_finance_reports"
+                  sequence="100"/>
+        <menuitem name="Báo cáo tồn kho"
+                  id="acc_report_onhand_id"
+                  parent="acc_report_stock_id"
+                  action="stock.action_view_quants"
+                  sequence="0"/>
+        <menuitem name="Định giá tồn kho"
+                  id="acc_report_value_id"
+                  parent="acc_report_stock_id"
+                  action="stock_account.stock_valuation_layer_action"
+                  sequence="1"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+product_brand_id,product_brand_name,model_product_brand,,1,1,1,1
+res_partner_course_id,res_partner_course_name,model_res_partner_course,,1,1,1,1
+report_stock_value_id,report_stock_value_name,model_report_stock_value,,1,1,1,1
+wz_stock_value_id,wz_stock_value_name,model_wz_stock_value,,1,1,1,1
+
