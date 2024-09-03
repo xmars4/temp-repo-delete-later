@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="account_invoice_form_rate_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.rate.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='invoice_payment_term_id']" position='before'>
+
+                    <field name="x_compare_currency" invisible="1"/>
+                    <field name="x_rate_active"
+                           attrs="{'invisible': [('x_compare_currency', '=', True)], 'readonly': [('state', '!=', 'draft')]}"
+                           string="Manual currency rate"/>
+                    <field name="x_rate" string="Currency rate"
+                           attrs="{'invisible': [('x_rate_active', '=', False)],
+                                   'readonly': [('state', '!=', 'draft')],
+                                   'required': [('x_rate_active', '=', True)]}"/>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

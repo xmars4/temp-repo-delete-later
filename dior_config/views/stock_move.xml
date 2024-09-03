@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form -->
+        <record id="view_move_line_tree_inherits" model="ir.ui.view">
+            <field name="name">stock.move.line.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="x_invoice_id" optional="show"/>
+                    <field name="x_type" optional="show"/>
+                    <field name="x_partner_id" optional="show"/>
+                    <field name="x_cost" optional="hide"/>
+                    <field name="x_qty" optional="show" sum="Tổng tồn"/>
+                </xpath>
+                <xpath expr="//field[@name='reference']" position="attributes">
+                    <attribute name="string">Tham chiếu</attribute>
+                </xpath>
+                <xpath expr="//field[@name='qty_done']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_line_form_inherits" model="ir.ui.view">
+            <field name="name">stock.move.line.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="x_invoice_id"/>
+                    <field name="x_type"/>
+                    <field name="x_partner_id"/>
+                    <field name="x_cost"/>
+                    <field name="x_qty"/>
+                </xpath>
+                <xpath expr="//field[@name='reference']" position="attributes">
+                    <attribute name="string">Tham chiếu</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

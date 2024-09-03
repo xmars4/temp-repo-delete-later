@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="con_pro_seq_id" model="ir.sequence">
+            <field name="name">Mrp Lunch Sequence</field>
+            <field name="code">con_pro_seq</field>
+            <field name="prefix">CP/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+    </data>
+    <data>
+        <record id="mrp_lunch_view_form" model="ir.ui.view">
+            <field name="name">Mrp Lunch Form</field>
+            <field name="model">mrp.lunch</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,calculator,done"/>
+                        <button name="button_sum" type="object" string="Tổng hợp đơn" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ['confirm', 'calculator', 'done', 'cancel'])]}"/>
+                        <button name="button_mat" type="object" string="Tính toán nguyên liệu" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'calculator', 'done', 'cancel'])]}"/>
+                        <button name="button_push" type="object" string="Lên lệnh chế biến" class="btn-primary"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'confirm', 'done', 'cancel'])]}"/>
+                    </header>
+                    <sheet>
+<!--                        <div class="oe_button_box" name="button_box">-->
+<!--                            <button name="show_goods_issue" type="object" class="oe_stat_button" icon="fa-pencil-square-o"-->
+<!--                                    attrs="{'invisible': [('gi_count', '=', 0)]}">-->
+<!--                                <field name="gi_count" widget="statinfo" string="Goods Issue"/>-->
+<!--                            </button>-->
+<!--                            <button name="show_goods_receipt" type="object" class="oe_stat_button" icon="fa-pencil-square-o"-->
+<!--                                    attrs="{'invisible': [('gr_count', '=', 0)]}">-->
+<!--                                <field name="gr_count" widget="statinfo" string="Goods Receipt"/>-->
+<!--                            </button>-->
+<!--                        </div>-->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" class="oe_inline oe_read_only" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="from_date"/>
+                                <field name="to_date"/>
+                            </group>
+                            <group>
+                                <field name="desc"/>
+                                <field name="create_uid"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="goods" string="Món ăn">
+                                <field name="out_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="qty"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="mat" string="Nguyên liệu">
+                                <field name="in_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="uom_id"/>
+                                        <field name="qty"/>
+                                        <field name="onhand"/>
+                                        <field name="qty1"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_lunch_view_tree" model="ir.ui.view">
+            <field name="name">Mrp Lunch Tree</field>
+            <field name="model">mrp.lunch</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="desc"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mrp_lunch_action" model="ir.actions.act_window">
+            <field name="name">Mrp Lunch</field>
+            <field name="res_model">mrp.lunch</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Mrp Lunch"
+                  id="mrp_lunch_id"
+                  parent="mrp.mrp_planning_menu_root"
+                  action="mrp_lunch_action"
+                  sequence="2"/>
+
+    </data>
+</odoo>

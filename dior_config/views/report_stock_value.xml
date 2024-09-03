@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_stock_value_view_tree" model="ir.ui.view">
+            <field name="name">report_stock_value_view_tree</field>
+            <field name="model">report.stock.value</field>
+            <field name="arch" type="xml">
+                <tree string="report_stock_value_tree" create="0" delete="0" edit="0">
+                    <field name="product_code"/>
+                    <field name="product"/>
+                    <field name="uom"/>
+                    <field name="qty_dk"/>
+                    <field name="value_dk"/>
+                    <field name="qty_in"/>
+                    <field name="value_in"/>
+                    <field name="qty_out"/>
+                    <field name="value_out"/>
+                    <field name="qty_ck"/>
+                    <field name="value_ck"/>
+                </tree>
+            </field>
+        </record>
+        <record id="report_stock_value_action" model="ir.actions.act_window">
+            <field name="name">Báo cáo XNT</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.stock.value</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="wz_stock_value_view_form" model="ir.ui.view">
+            <field name="name">wz_stock_value_view_form</field>
+            <field name="model">wz.stock.value</field>
+            <field name="arch" type="xml">
+                <form string="wz_stock_value_form">
+                    <sheet>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="stock_location"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_print" string="Tạo báo cáo" type="object" class="btn-primary"/>
+                        <button special="cancel" string="Hủy bỏ"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_report_stock_value" model="ir.ui.view">
+            <field name="name">report.stock.value</field>
+            <field name="model">report.stock.value</field>
+            <field name="arch" type="xml">
+                <search string="Search Invoice">
+                    <field name="product" string="Sản phẩm"
+                           filter_domain="['|',('product', 'ilike', self), ('product_code', 'ilike', self)]"/>
+
+                    <separator/>
+                    <filter name="origin" string="Đơn vị Gốc" domain="[('check_origin','=',True)]"/>
+                    <filter name="fake" string="Đơn vị 2" domain="[('check_origin', '=', False)]"/>
+                    <separator/>
+
+                </search>
+            </field>
+        </record>
+
+        <record id="wz_stock_value_action" model="ir.actions.act_window">
+            <field name="name">BC XNT</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wz.stock.value</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wz_stock_value_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="wz_stock_value_action_menu" name="Báo cáo Xuất nhập tồn" parent="dior_config.acc_report_stock_id"
+                  action="wz_stock_value_action" sequence="3"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data>
+        <record id="view_account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='payment_type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='is_internal_transfer']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='amount']" position="attributes">
+                    <attribute name="attrs">
+                        {
+                        'readonly': ['|', ('x_payment_type', 'in', ['inv_manual', 'nor']), ('state', '!=', 'draft')],
+                        'required': [('x_payment_type', '=', 'inv_auto')]
+                        }
+                    </attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id'][1]" position="attributes">
+                    <attribute name="attrs">
+                        {'readonly':[('state', '!=', 'draft')],
+                        'invisible':['|', ('partner_type','!=','customer'), ('is_internal_transfer', '=', True)],
+                        'required':[('is_internal_transfer', '!=', True)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id'][2]" position="attributes">
+                    <attribute name="attrs">
+                        {'readonly':[('state', '!=', 'draft')],
+                        'invisible':['|', ('partner_type','!=','supplier'), ('is_internal_transfer', '=', True)],
+                        'required':[('is_internal_transfer', '!=', True)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="x_payment_type" widget="radio"
+                           attrs="{'readonly':[('state', '!=', 'draft')],
+                                   'invisible':[('is_internal_transfer', '=', True)]}"/>
+                    <field name="x_tax_type" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="x_liquid" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    <field name="x_operation_type" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    <label for="x_warning_message" class="oe_edit_only" invisible="1"/>
+                    <i style="color: red;">
+                        <field name="x_warning_message" attrs="{'invisible': [('x_warning_message', '=', False)]}"/>
+                    </i>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_bank_id'][3]" position="after">
+                    <field name="create_uid" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    <field name="x_director" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    <field name="x_cashier" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                    <field name="x_receiver"
+                           attrs="{'invisible': [('is_internal_transfer', '=', True)], 'readonly':[('state', '!=', 'draft')]}"/>
+                    <field name="x_payment_remain_id"
+                           attrs="{'invisible': [('x_payment_remain_id', '=', False)], 'readonly':[('state', '!=', 'draft')]}"/>
+                </xpath>
+
+                <xpath expr="//sheet/group" position="after">
+                    <notebook>
+                        <page name="details" string="Detail"
+                              attrs="{'invisible': ['|', ('is_internal_transfer', '=', True), ('x_payment_type', '!=', 'nor')]}">
+                            <button name="button_compute_taxes" type="object" string="Tạo các mục thuế"
+                                    class="oe_highlight"
+                                    confirm="Xoá các dòng thuế (nếu có) và tạo lại?"
+                                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            <field name="x_payment_line_ids" nolabel="1"
+                                   context="{'default_partner_id': partner_id, 'default_currency_id': currency_id}"
+                                   attrs="{'readonly':[('state', '!=', 'draft')]}">
+                                <tree string="Payment card line" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="partner_id" create="0" edit="0" invisible="1"
+                                           options='{"no_create": 1, "no_create_edit": 1}'/>
+                                    <field name="product_id"
+                                           attrs="{'column_invisible':[('parent.payment_type', '=', 'inbound')]}"/>
+                                    <field name="account_id" required="1"
+                                           options='{"no_create": 1, "no_create_edit": 1}'/>
+                                    <field name="currency_id" invisible="1"
+                                           options='{"no_create": 1, "no_create_edit": 1}'/>
+                                    <field name="value"/>
+                                    <field name="tax_ids" widget="many2many_tags"
+                                           options="{'no_open': True, 'no_create': True}"
+                                           domain="[('type_tax_use', '=', parent.x_tax_type)]"/>
+                                    <field name="is_auto_gen" invisible="1" force_save="1"/>
+                                </tree>
+                                <form string="Payment card line">
+                                    <group col="4">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="value"/>
+                                        <field name="tax_ids"/>
+                                        <field name="is_auto_gen" invisible="1" force_save="1"/>
+                                        <field name="account_id"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="invoices" string="Invoices"
+                              attrs="{'invisible': ['|', ('is_internal_transfer', '=', True),('x_payment_type', 'not in', ['inv_auto', 'inv_manual'])]}">
+                            <field name="x_payment_invoice_ids" attrs="{'readonly':[('state', '!=', 'draft')]}">
+                                <tree editable="bottom" create="0" delete="0" decoration-muted="selected==False">
+                                    <field name="move_currency_id" invisible="1"/>
+                                    <field name="selected"/>
+                                    <field name="move_id" readonly="1" force_save="1"/>
+                                    <field name="move_date" readonly="1"/>
+                                    <field name="move_ref" readonly="1"/>
+                                    <field name="move_total" readonly="1"/>
+                                    <field name="amount_residual" readonly="1"/>
+                                    <field name="amount" force_save="1"
+                                           attrs="{'required': [('selected', '=', True)], 'readonly': ['|', ('selected', '=', False), ('parent.x_payment_type', '=', 'inv_auto')]}"/>
+                                    <field name="note" attrs="{'readonly': [('selected', '=', False)]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="notes" string="Note">
+                            <field name="x_note"/>
+                        </page>
+                    </notebook>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_account_payment_tree_inherit" model="ir.ui.view">
+            <field name="name">account_payment_up.account.payment.tree</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="x_payment_type"/>
+                    <field name="payment_type"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

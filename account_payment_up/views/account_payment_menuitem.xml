@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_payments_cash_bank" name="Payments"
+                  parent="account_accountant.menu_accounting"
+                  sequence="7"
+                  groups="account.group_account_readonly">
+
+            <menuitem id="menu_payment_cash" name="Payment Cash" sequence="1">
+                <menuitem id="menu_action_payment_cash_out" action="action_account_payment_cash_out"
+                          groups="account.group_account_readonly" sequence="1"/>
+                <menuitem id="menu_action_payment_cash_in" action="action_account_payment_cash_in"
+                          groups="account.group_account_readonly" sequence="2"/>
+            </menuitem>
+
+            <menuitem id="menu_payment_bank" name="Payment Bank" sequence="2">
+                <menuitem id="menu_action_payment_bank_out" action="action_account_payment_bank_out"
+                          groups="account.group_account_readonly" sequence="1"/>
+                <menuitem id="menu_action_payment_bank_in" action="action_account_payment_bank_in"
+                          groups="account.group_account_readonly" sequence="2"/>
+            </menuitem>
+
+<!--            <menuitem id="menu_internal_payment" name="Internal Payment" sequence="3">-->
+<!--                <menuitem id="menu_action_internal_payment" action="action_account_internal_payment"-->
+<!--                          groups="account.group_account_readonly" sequence="1"/>-->
+<!--            </menuitem>-->
+
+        </menuitem>
+    </data>
+</odoo>
