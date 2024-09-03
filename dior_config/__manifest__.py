@@ -17,8 +17,6 @@
                 'account_followup', 'account_auto_transfer', 'account_asset', 'account_accountant', 'account_reports'],
     'data': [
         'data/data.xml',
-        'data/data2.xml',
-        'security/sercurity.xml',
         'security/ir.model.access.csv',
         'views/res_partner.xml',
         'views/product_brand.xml',

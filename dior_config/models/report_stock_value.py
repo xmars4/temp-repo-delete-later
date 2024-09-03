@@ -20,8 +20,8 @@ class ReportStockValue(models.TransientModel):
     check_origin = fields.Boolean('UOM Gốc')
 
     def init(self):
-        self.env.cr.execute(f"""DROP FUNCTION IF EXISTS fnc_stock_value_report(from_date date, to_date date, tz character varying)""")
-        self.env.cr.execute("""CREATE OR REPLACE FUNCTION fnc_stock_value_report(from_date date, to_date date, tz character varying)
+        self.env.cr.execute(f"""DROP FUNCTION IF EXISTS fnc_stock_value_report(from_date date, to_date date, tz character varying, lc_id integer)""")
+        self.env.cr.execute("""CREATE OR REPLACE FUNCTION fnc_stock_value_report(from_date date, to_date date, tz character varying, lc_id integer)
                  RETURNS VOID
                  LANGUAGE plpgsql
                     AS $function$
@@ -48,18 +48,18 @@ class ReportStockValue(models.TransientModel):
                                    True as check_origin
                             from (
                                 select sm.product_id, sm.product_uom,
-                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date < from_date and sm.location_dest_id = 8 
+                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date < from_date and sm.location_dest_id = lc_id 
                                        then sm.product_uom_qty
-                                           when (sm.date at time zone 'utc' at time zone tz)::date < from_date and location_id = 8 
+                                           when (sm.date at time zone 'utc' at time zone tz)::date < from_date and location_id = lc_id 
                                            then -sm.product_uom_qty
                                            else 0 end) as dk,
-                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date between from_date and to_date and sm.location_dest_id = 8 
+                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date between from_date and to_date and sm.location_dest_id = lc_id 
                                        then sm.product_uom_qty else 0 end) as nhap,
-                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date between from_date and to_date and sm.location_id = 8 
+                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date between from_date and to_date and sm.location_id = lc_id 
                                        then sm.product_uom_qty else 0 end) as xuat,
-                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date <= to_date and location_dest_id = 8
+                                       sum(case when (sm.date at time zone 'utc' at time zone tz)::date <= to_date and location_dest_id = lc_id
                                         then sm.product_uom_qty
-                                           when (sm.date at time zone 'utc' at time zone tz)::date <= to_date and sm.location_id = 8
+                                           when (sm.date at time zone 'utc' at time zone tz)::date <= to_date and sm.location_id = lc_id
                                             then -sm.product_uom_qty
                                            else 0 end) as ck
                                 from stock_move sm
@@ -105,6 +105,7 @@ class WzStockValue(models.TransientModel):
 
     from_date = fields.Date('Từ ngày')
     to_date = fields.Date('Đến ngày', required=True, default=fields.Date.today())
+    stock_location = fields.Many2one('stock.location', required=True, domain="[('usage', '=', 'internal')]", string="Địa điểm")
 
     def action_print(self):
         self.ensure_one()
@@ -113,7 +114,7 @@ class WzStockValue(models.TransientModel):
         self.env.cr.execute(
             f"""delete from report_stock_value where id is not null""")
         self.env.cr.execute(
-            f"""SELECT fnc_stock_value_report('{from_date}'::date, '{self.to_date}'::date, '{tz}')""")
+            f"""SELECT fnc_stock_value_report('{from_date}'::date, '{self.to_date}'::date, '{tz}',{self.stock_location.id})""")
         return {
             'name': _('Báo cáo Xuất nhập tồn'),
             'res_model': 'report.stock.value',

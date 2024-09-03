@@ -92,6 +92,6 @@ class StockPicking(models.Model):
                         for account_move in account_moves:
                             account_move.button_cancel()
                             account_move.mapped('line_ids').remove_move_reconcile()
-                        account_move.with_context(force_delete=True).unlink()
+                        account_moves.with_context(force_delete=True).unlink()
         res = super(StockPicking, self).action_cancel()
         return res

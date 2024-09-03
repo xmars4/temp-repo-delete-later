@@ -9,7 +9,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="x_phone" optional="show"/>
-                    <field name="x_check_lock" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']"
                        position="attributes">
@@ -55,9 +54,9 @@
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
+               <!-- <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="attributes">-->
+               <!--     <attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
                 <!--                <xpath expr="//button[@name='button_draft']" position="attributes">-->
                 <!--                    <attribute name="invisible">1</attribute>-->
                 <!--                </xpath>-->

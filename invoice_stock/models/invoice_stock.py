@@ -7,9 +7,18 @@ from odoo import models, fields, api, _
 class InvoiceStockMove(models.Model):
     _inherit = 'account.move'
 
+    def _get_stock_warehouse_id(self):
+        company_id = self.env.context.get('default_company_id', self.env.company.id)
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', company_id)], limit=1
+        )
+        return warehouse
     def _get_stock_type_ids(self):
-        data = self.env['stock.picking.type'].search([])
-
+        if not self.warehouse_id:
+            wh = self._get_stock_warehouse_id()
+        else:
+            wh = self.warehouse_id
+        data = self.env['stock.picking.type'].search([('warehouse_id', '=', wh.id)])
         if self._context.get('default_move_type') in ('out_invoice', 'in_refund'):
             for line in data:
                 if line.code == 'outgoing':
@@ -21,26 +30,20 @@ class InvoiceStockMove(models.Model):
 
     picking_count = fields.Integer(string="Count", copy=False)
     invoice_picking_id = fields.Many2one('stock.picking', string="Picking Id", copy=False)
-
+    warehouse_id = fields.Many2one('stock.warehouse', string="Kho",default=_get_stock_warehouse_id, required=True)
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking Type',
                                       default=_get_stock_type_ids,
                                       help="This will determine picking type of incoming shipment")
 
-    def get_stock_picking_type(self):
-        data = self.env['stock.picking.type'].search([])
 
-        if self.move_type in ('out_invoice', 'in_refund'):
-            for line in data:
-                if line.code == 'outgoing':
-                    return line
-        if self.move_type in ('in_invoice', 'out_refund'):
-            for line in data:
-                if line.code == 'incoming':
-                    return line
+    @api.onchange('warehouse_id')
+    def onc_warehouse_id(self):
+        pk_type = self._get_stock_type_ids()
+        self.picking_type_id = pk_type
 
     def action_stock_move(self):
-        pk_type = self.get_stock_picking_type()
-        self.picking_type_id = pk_type
+        # pk_type = self.get_stock_picking_type()
+        # self.picking_type_id = pk_type
         if not self.picking_type_id:
             raise UserError(_(
                 " Please select a picking type"))

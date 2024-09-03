@@ -9,7 +9,8 @@
 
                 <xpath expr="//field[@name='invoice_date']" position="after">
 
-                    <field name="picking_type_id" readonly="1" invisible="1"/>
+                    <field name="warehouse_id" invisible="0"/>
+                    <field name="picking_type_id" readonly="1" invisible="1" force_save="1"/>
                     <field name="invoice_picking_id" invisible="1"/>
                 </xpath>
                 <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
